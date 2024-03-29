@@ -47,7 +47,7 @@ message = client.beta.threads.messages.create(
 run = client.beta.threads.runs.create(
     thread_id = thread_id,
     assistant_id = assistant_id,
-    instructions = "Please address the user as Austin"
+    instructions = "Please address the user as German"
 )
 
 messages = client.beta.threads.messages.list(thread_id = thread_id)
