@@ -1,6 +1,7 @@
 import os
 from openai import OpenAI
 from dotenv import find_dotenv, load_dotenv
+import time
 
 # Gets Api key from .env file
 load_dotenv()
@@ -37,11 +38,11 @@ MODEL = "gpt-3.5-turbo"
 assistant_id = os.environ.get("ASST_ID")
 thread_id = os.environ.get("THREAD_ID")
 
-MESSAGE = "What do you think about college? Is it a good investment?"
+message = input("Please enter your question: ")
 message = client.beta.threads.messages.create(
     thread_id = thread_id,
     role = "user",
-    content = MESSAGE
+    content = message
 )
 
 run = client.beta.threads.runs.create(
@@ -50,7 +51,18 @@ run = client.beta.threads.runs.create(
     instructions = "Please address the user as Austin"
 )
 
+def wait_on_run(run, thread_id):
+    while run.status == "queued" or run.status == "in_progress":
+        run = client.beta.threads.runs.retrieve(
+            thread_id=thread_id,
+            run_id=run.id,
+        )
+        time.sleep(0.5)
+    return run
+
+run = wait_on_run(run, thread_id)
+
 messages = client.beta.threads.messages.list(thread_id = thread_id)
 last_message = messages.data[0]
 response = last_message.content[0].text.value
-print(response) 
+print(f"Assistant Reponse: {response}")
