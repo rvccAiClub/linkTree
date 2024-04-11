@@ -2,6 +2,7 @@
 from openai import OpenAI
 from dotenv import find_dotenv, load_dotenv
 import os
+import time
 
 # --- Get API key from .env file --- #
 load_dotenv()
@@ -62,6 +63,18 @@ run = client.beta.threads.runs.create(
    thread_id=thread_id,
     assistant_id=assistant_id,
     instructions="Please address the user as Sebastian")
+
+
+def wait_on_run(run, thread_id):
+    while run.status == "queued" or run.status == "in_progress":
+        run = client.beta.threads.runs.retrieve(
+            thread_id=thread_id,
+            run_id=run.id,
+        )
+        time.sleep(0.5)
+    return run
+
+run = wait_on_run(run, thread_id)
 
 
 # --- Create the second message (Change this later) --- #
