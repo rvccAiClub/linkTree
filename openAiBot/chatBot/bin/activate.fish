@@ -29,7 +29,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/fhashare/Desktop/RVCC/RVCCAIClub/linkTree/chatBot"
+set -gx VIRTUAL_ENV "/Users/fhashare/Desktop/RVCC/RVCCAIClub/linkTree/openAiBot/chatBot"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
