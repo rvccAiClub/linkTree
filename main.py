@@ -71,4 +71,4 @@ last_message = message.data[0]
 response = last_message.content[0].text.value
 print(response)
 
-#run_steps = client.beta.threads.runs.steps.list(thread_id=thread_id, run_id = run.id)
+run_steps = client.beta.threads.runs.steps.list(thread_id=thread_id, run_id = run.id)
