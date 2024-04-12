@@ -1,4 +1,4 @@
-# --- Import OPENAI API --- #
+# --- Import OpenAi Api --- #
 from openai import OpenAI
 from dotenv import find_dotenv, load_dotenv
 import os
@@ -14,8 +14,9 @@ client = OpenAI(api_key=os.environ.get("API_KEY"))
 # --- Declare the model --- #
 MODEL = "gpt-3.5-turbo-16k"
 
+# --------- Below code is commented out on purpose  --------- #
 
-# Initiate the chatBot object (we pass in a unique name and gave the model a context point of what it will do)#
+# --- Initiate the chatBot object (we pass in a unique name and gave the model a context point of what it will do)--- #
 #clubChatBot = client.beta.assistants.create(
     #name="ARVEE",
     #instructions= """You are a friendly and concise assistant who helps new students answer questions about RVCC A.I. Club.""",
@@ -23,7 +24,7 @@ MODEL = "gpt-3.5-turbo-16k"
     #)
 
 
-# Create our Assistant #
+# --- Create our Assistant --- #
 #assistants_id = clubChatBot.id
 #print(clubChatBot.id)
 
@@ -43,27 +44,27 @@ MODEL = "gpt-3.5-turbo-16k"
 #thread_id = thread.id
 #print(thread_id)
 
-
-# Video Timestamp #
+# --------- Above code is commented out on purpose --------- #
 
 assistant_id = os.environ.get("ASST_ID")
 thread_id = os.environ.get("THREAD_ID")
 
 
  # --- Create a message --- #
+ # ---Ask a question that will be passed to the OpenAI API --- #
 MESSAGE = "What do you think about college? Is it a good investment?"
 message = client.beta.threads.messages.create(
     thread_id=thread_id,
     role="user",
-    content=MESSAGE
-)
+    content=MESSAGE)
 
- ### --- Run the Application --- ###
+ # --- Run the Application (And address the user as "User name") --- #
 run = client.beta.threads.runs.create(
    thread_id=thread_id,
     assistant_id=assistant_id,
     instructions="Please address the user as Sebastian")
 
+# --- Time Parameters --- #
 
 def wait_on_run(run, thread_id):
     while run.status == "queued" or run.status == "in_progress":
@@ -77,7 +78,7 @@ def wait_on_run(run, thread_id):
 run = wait_on_run(run, thread_id)
 
 
-# --- Create the second message (Change this later) --- #
+# --- Print the Response of the ChatBot ARVEE Answering the Question --- #
 messages = client.beta.threads.messages.list(thread_id = thread_id)
 last_message = messages.data[0]
 response = last_message.content[0].text.value
