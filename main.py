@@ -83,3 +83,6 @@ messages = client.beta.threads.messages.list(thread_id = thread_id)
 last_message = messages.data[0]
 response = last_message.content[0].text.value
 print(response) 
+
+
+#this is a test 
